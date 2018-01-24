@@ -1,0 +1,4 @@
+﻿24/01/2018-16:36:06Error en los Items: CD180|CD265|Error Referente a: Quantity falls into negative inventory  [WTR1.ItemCode][line: 1]
+
+24/01/2018-16:36:28Error en los Items: CD180|CD265|Error Referente a: Quantity falls into negative inventory  [WTR1.ItemCode][line: 1]
+
