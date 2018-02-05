@@ -129,7 +129,7 @@ Public Class FrmP
                         transfer.Lines.BatchNumbers.UserFields.Fields.Item("U_Correlativo").Value = oRecordSet.Fields.Item(6).Value
                         transfer.Lines.BatchNumbers.Add()
                         transfer.Lines.Add()
-                        items += oRecordSet.Fields.Item(0).Value & "|"
+                        items += oRecordSet.Fields.Item(2).Value & "|"
                     End If
                     System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecordSet)
                     oRecordSet = Nothing
@@ -140,7 +140,7 @@ Public Class FrmP
                 transfer.FromWarehouse = "PT"
                 transfer.ToWarehouse = "BMP2"
                 transfer.DocDate = Now.ToShortDateString
-                transfer.Comments = "Lotes Transferidos: " & items.TrimEnd("|")
+                transfer.Comments = "Lotes Transferidos: " & items.TrimEnd("|") & "De Orden: " & txtOrder.Text
                 oReturn = transfer.Add()
                 If oReturn <> 0 Then
                     con.oCompany.GetLastError(oError, errMsg)
