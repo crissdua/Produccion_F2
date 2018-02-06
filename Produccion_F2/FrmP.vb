@@ -140,7 +140,7 @@ Public Class FrmP
                 transfer.FromWarehouse = "PT"
                 transfer.ToWarehouse = "BMP2"
                 transfer.DocDate = Now.ToShortDateString
-                transfer.Comments = "Lotes Transferidos: " & items.TrimEnd("|") & "De Orden: " & txtOrder.Text
+                transfer.Comments = "Lotes Transferidos: " & items.TrimEnd("|") & " De Orden: " & txtOrder.Text
                 oReturn = transfer.Add()
                 If oReturn <> 0 Then
                     con.oCompany.GetLastError(oError, errMsg)

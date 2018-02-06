@@ -102,7 +102,6 @@ Partial Class FrmP
         Me.txtOrder.Name = "txtOrder"
         Me.txtOrder.Size = New System.Drawing.Size(100, 20)
         Me.txtOrder.TabIndex = 72
-        Me.txtOrder.Text = "35106"
         '
         'Button4
         '
