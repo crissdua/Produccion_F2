@@ -26,11 +26,9 @@ Public Class FrmP
             Return myCp
         End Get
     End Property
-    Public Sub New(ByVal user As String)
+    Public Sub New()
         MyBase.New()
         InitializeComponent()
-        '  Note which form has called this one
-        ToolStripStatusLabel1.Text = user
     End Sub
 
     Public Function CargaGridLecturaBC()
@@ -39,18 +37,21 @@ Public Class FrmP
         Dim query2 As String
         query2 = ""
         Try
-            reader = File.OpenText(System.Windows.Forms.Application.StartupPath + "\" + txtOrder.Text + ".txt")
-            entra = System.Windows.Forms.Application.StartupPath + "\" + txtOrder.Text + ".txt"
+            reader = File.OpenText(System.Windows.Forms.Application.StartupPath + "\Traslado\" + txtOrder.Text + ".txt")
+            entra = System.Windows.Forms.Application.StartupPath + "\Traslado\" + txtOrder.Text + ".txt"
             Dim line As String = Nothing
 
             Dim lines As Integer = 0
             While (reader.Peek() <> -1)
                 line = reader.ReadLine()
                 Dim rnum As Integer = DGV.Rows.Add()
-                DGV.Rows.Item(rnum).Cells(0).Value = line.ToString
+                DGV.Rows.Item(rnum).Cells(1).Value = line.ToString
                 System.Windows.Forms.Application.DoEvents()
             End While
             reader.Close()
+            For Each row As DataGridViewRow In DGV.Rows
+                row.Cells("CHK").Value = True
+            Next
         Catch ex As Exception
             MessageBox.Show("El Picking del numero de orden no existe")
         End Try
@@ -71,7 +72,6 @@ Public Class FrmP
             MessageBox.Show("Puede continuar!")
         ElseIf result = DialogResult.Yes Then
             DGV.Rows.Clear()
-            MessageBox.Show("Inicie un objeto nuevo")
         End If
     End Sub
 
@@ -80,13 +80,11 @@ Public Class FrmP
         If result = DialogResult.No Then
             MessageBox.Show("Puede continuar")
         ElseIf result = DialogResult.Yes Then
-            MessageBox.Show("Finalizando modulo")
             Try
                 con.oCompany.Disconnect()
             Catch
             End Try
-            Application.Exit()
-            Me.Close()
+            Me.Hide()
         End If
     End Sub
 
@@ -113,7 +111,7 @@ Public Class FrmP
                             SELECT T0.ItemCode, SUM(CASE T0.Direction when 0 then 1 else -1 end * T0.Quantity) as Quantitys, T0.BatchNum , T1.U_Heat,t1.U_Coi,t1.U_Ancho,t1.U_Correlativo
                             FROM IBT1 T0 inner join obtn T1 on T0.BatchNum = t1.DistNumber
                             GROUP BY T0.BatchNum, T0.ItemCode, T1.U_Heat,t1.U_Coi,t1.U_Ancho,t1.U_Correlativo)
-                            SELECT ItemCode, Quantitys, BatchNum, U_Heat, U_Coi,U_Ancho,U_Correlativo from batchs where Quantitys > 0 and BatchNum = '" + DGV.Rows(i).Cells(0).Value.ToString + "'")
+                            SELECT ItemCode, Quantitys, BatchNum, U_Heat, U_Coi,U_Ancho,U_Correlativo from batchs where Quantitys > 0 and BatchNum = '" + DGV.Rows(i).Cells(1).Value.ToString + "'")
                     oRecordSet = con.oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
                     oRecordSet.DoQuery(sql)
                     If oRecordSet.RecordCount > 0 Then
@@ -137,8 +135,8 @@ Public Class FrmP
                     i = i + 1
 
                 End While
-                transfer.FromWarehouse = "PT"
-                transfer.ToWarehouse = "BMP2"
+                transfer.FromWarehouse = "BMP2"
+                transfer.ToWarehouse = "BMP1"
                 transfer.DocDate = Now.ToShortDateString
                 transfer.Comments = "Lotes Transferidos: " & items.TrimEnd("|") & " De Orden: " & txtOrder.Text
                 oReturn = transfer.Add()
@@ -147,11 +145,11 @@ Public Class FrmP
                     reader.Close()
                     MsgBox("Error en los Items: " & items & "Error Referente a: " & errMsg)
                     My.Computer.FileSystem.WriteAllText(System.Windows.Forms.Application.StartupPath + "\Log\LogErroresTransferencia.txt", DateTime.Now.ToString("dd/MM/yyyy-HH:mm:ss") & "Error en los Items: " & items & "Error Referente a: " & errMsg & vbCrLf, True)
-                    sale = System.Windows.Forms.Application.StartupPath + "\Temp\" + txtOrder.Text + "-ERROR-" & DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") & ".txt"
+                    sale = System.Windows.Forms.Application.StartupPath + "\Temp\Traslado\" + txtOrder.Text + "-ERROR-" & DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") & ".txt"
                     File.Move(entra, sale)
                 Else
                     MessageBox.Show("Transferencia Realizada con Exito")
-                    sale = System.Windows.Forms.Application.StartupPath + "\Temp\" + txtOrder.Text + "-TransFerido" & DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") & ".txt"
+                    sale = System.Windows.Forms.Application.StartupPath + "\Temp\Traslado\" + txtOrder.Text + "-TransFerido" & DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") & ".txt"
                     File.Move(entra, sale)
                     txtOrder.Clear()
                     DGV.Rows.Clear()
@@ -159,8 +157,7 @@ Public Class FrmP
             End If
 
         Catch ex As Exception
-            MessageBox.Show("Verifique que El archivo Existe en la carpeta Raiz")
-            MessageBox.Show(ex.ToString)
+            MessageBox.Show("Verifique que El archivo Existe en la carpeta Raiz, Revisar Log de errores")
         End Try
     End Function
 
@@ -200,4 +197,7 @@ Public Class FrmP
         Call EnterClick(sender, e)
     End Sub
 
+    Private Sub FrmP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

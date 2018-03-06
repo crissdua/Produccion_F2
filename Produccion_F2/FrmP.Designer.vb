@@ -26,14 +26,12 @@ Partial Class FrmP
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.DGV = New System.Windows.Forms.DataGridView()
-        Me.BarCodes = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.txtOrder = New System.Windows.Forms.TextBox()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.CHK = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BarCodes = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.DGV, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Button3
@@ -68,33 +66,12 @@ Partial Class FrmP
         Me.DGV.AllowUserToAddRows = False
         Me.DGV.AllowUserToDeleteRows = False
         Me.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.BarCodes})
-        Me.DGV.Location = New System.Drawing.Point(62, 56)
+        Me.DGV.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CHK, Me.BarCodes})
+        Me.DGV.Location = New System.Drawing.Point(47, 56)
         Me.DGV.Name = "DGV"
         Me.DGV.ReadOnly = True
-        Me.DGV.Size = New System.Drawing.Size(165, 196)
+        Me.DGV.Size = New System.Drawing.Size(197, 196)
         Me.DGV.TabIndex = 66
-        '
-        'BarCodes
-        '
-        Me.BarCodes.HeaderText = "BarCodes"
-        Me.BarCodes.Name = "BarCodes"
-        Me.BarCodes.ReadOnly = True
-        '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 302)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(292, 22)
-        Me.StatusStrip1.TabIndex = 65
-        Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(120, 17)
-        Me.ToolStripStatusLabel1.Text = "ToolStripStatusLabel1"
         '
         'txtOrder
         '
@@ -122,11 +99,24 @@ Partial Class FrmP
         Me.Button1.Text = "Buscar"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'CHK
+        '
+        Me.CHK.HeaderText = "OK"
+        Me.CHK.Name = "CHK"
+        Me.CHK.ReadOnly = True
+        Me.CHK.Width = 50
+        '
+        'BarCodes
+        '
+        Me.BarCodes.HeaderText = "BarCodes"
+        Me.BarCodes.Name = "BarCodes"
+        Me.BarCodes.ReadOnly = True
+        '
         'FrmP
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(292, 324)
+        Me.ClientSize = New System.Drawing.Size(292, 293)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.txtOrder)
         Me.Controls.Add(Me.Button3)
@@ -134,13 +124,10 @@ Partial Class FrmP
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.DGV)
-        Me.Controls.Add(Me.StatusStrip1)
         Me.Name = "FrmP"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Form1"
+        Me.Text = "Traslado Stock"
         CType(Me.DGV, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -150,9 +137,8 @@ Partial Class FrmP
     Friend WithEvents Button1 As Button
     Friend WithEvents Label13 As Label
     Friend WithEvents DGV As DataGridView
-    Friend WithEvents StatusStrip1 As StatusStrip
-    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents txtOrder As TextBox
-    Friend WithEvents BarCodes As DataGridViewTextBoxColumn
     Friend WithEvents Button4 As Button
+    Friend WithEvents CHK As DataGridViewCheckBoxColumn
+    Friend WithEvents BarCodes As DataGridViewTextBoxColumn
 End Class
