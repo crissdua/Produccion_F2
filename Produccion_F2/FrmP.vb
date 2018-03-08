@@ -135,8 +135,8 @@ Public Class FrmP
                     i = i + 1
 
                 End While
-                transfer.FromWarehouse = "BMP2"
-                transfer.ToWarehouse = "BMP1"
+                transfer.FromWarehouse = "BMP1"
+                transfer.ToWarehouse = "BMP2"
                 transfer.DocDate = Now.ToShortDateString
                 transfer.Comments = "Lotes Transferidos: " & items.TrimEnd("|") & " De Orden: " & txtOrder.Text
                 oReturn = transfer.Add()
